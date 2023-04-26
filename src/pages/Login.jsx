@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import ReactPlayer from 'react-player';
 import { fetchQuestions, openSettings, saveUser } from '../redux/actions';
 import GameSettings from '../components/GameSettings';
 import logo from '../trivia.png';
 import '../App.css';
 import getTokens from '../services/getTokes';
+import openning from '../assets/opennng.mp4';
 
 const MIN_LENGTH = 0;
 
@@ -15,6 +17,7 @@ class Login extends Component {
     email: '',
     name: '',
     buttonIsDisable: true,
+    video: true,
   };
 
   handleChange = ({ target }) => {
@@ -50,8 +53,9 @@ class Login extends Component {
         : (
           <>
             <header className="App-header">
-              <img src={ logo } className="App-logo" alt="logo" />
-              <p>SUA VEZ</p>
+              <video className="videoTag" autoPlay loop muted>
+                <source src={ openning } type="video/mp4" />
+              </video>
             </header>
             <form>
               <input
