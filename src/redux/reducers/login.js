@@ -1,13 +1,20 @@
-import { CLEAR_PLAYER, CLOSE_SETTINGS, OPEN_SETTINGS, SAVE_USER } from '../actions';
+import { CLEAR_PLAYER,
+  CLOSE_SETTINGS,
+  OPEN_SETTINGS,
+  SAVE_USER,
+  SAVE_SETTINGS,
+  SAVE_CATEGORYS,
+} from '../actions';
 
 const INITIAL_STATE = {
   email: '',
   name: '',
-  category: '',
-  difficulty: '',
+  category: null,
+  difficulty: null,
   settings: false,
   imgGravatar: '',
   scoreBoard: 0,
+  categorys: [],
 };
 
 const login = (state = INITIAL_STATE, action) => {
@@ -41,6 +48,19 @@ const login = (state = INITIAL_STATE, action) => {
       settings: false,
       imgGravatar: '',
       scoreBoard: 0,
+    });
+
+  case SAVE_SETTINGS:
+    return ({
+      ...state,
+      difficulty: action.difficulty,
+      category: action.category,
+    });
+
+  case SAVE_CATEGORYS:
+    return ({
+      ...state,
+      categorys: action.payload,
     });
 
   default:

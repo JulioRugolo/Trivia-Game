@@ -8,6 +8,8 @@ export const SAVE_RANK = 'SAVE_RANK';
 export const UPDATE_RANK = 'UPDATE_RANK';
 export const CLEAR_PLAYER = 'CLEAR_PLAYER';
 export const SAVE_ZERO_POINTS = 'SAVE_ZERO_POINTS';
+export const SAVE_SETTINGS = 'SAVE_SETTINGS';
+export const SAVE_CATEGORYS = 'SAVE_CATEGORYS';
 const RESPONSE_CODE = 3;
 
 export const openSettings = () => ({
@@ -28,9 +30,15 @@ export const saveQuestions = (data) => ({
   payload: data,
 });
 
-export function fetchQuestions(history) {
-  const token = localStorage.getItem('token');
-  const url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+export function fetchQuestions(history, difficulty, category, token) {
+  let url = `https://opentdb.com/api.php?amount=5&token=${token}`;
+  if (category === null && difficulty !== null) {
+    url = `https://opentdb.com/api.php?amount=5&difficulty=${difficulty}&token=${token}`;
+  } else if (difficulty === null && category !== null) {
+    url = `https://opentdb.com/api.php?amount=5&category=${category}&token=${token}`;
+  } else if (category !== null && difficulty !== null) {
+    url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&token=${token}`;
+  }
   return (dispatch) => {
     fetch(url)
       .then((response) => response.json())
@@ -81,3 +89,14 @@ export const updateRank = (playerRank) => ({
 });
 
 export const clearPlayerState = () => ({ type: CLEAR_PLAYER });
+
+export const saveSettings = (difficulty, category) => ({
+  type: SAVE_SETTINGS,
+  difficulty,
+  category,
+});
+
+export const saveCategorys = (categorys) => ({
+  type: SAVE_CATEGORYS,
+  payload: categorys,
+});
